@@ -27,7 +27,12 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: gradle testDebugUnitTest assembleDebug --stacktrace
 
-      - uses: actions/upload-artifact@v4
+      - name: Show built APK files
+        run: find . -name "*.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: notchat-debug-apk
-          path: notchat/app/build/outputs/apk/debug/app-
+          path: notchat/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
